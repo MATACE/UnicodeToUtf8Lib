@@ -9,6 +9,8 @@
 
 using namespace std;
 
+#define #define UNICODE_BUF_LENGTH 256
+
 class UnicodeToUtf8Trans {
 public:
     UnicodeToUtf8Trans();
