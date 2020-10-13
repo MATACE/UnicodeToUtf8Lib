@@ -1,14 +1,42 @@
-/********************************************************************
-  Copyright, 2012, Kinco (Shanghai) Ltd.
-  All rights reserved.
 
-  FileName: sqlsimpleAPI.h
-  Description:¶¨ÒåsqliteÊý¾Ýµ÷ÓÃµÄ½Ó¿Ú
-
-  Revision history:
-      <author>  	<time>  	 	<version >   	<desc>
-       lianxx       2012/06 	     0.1
-********************************************************************/
+/** 
+ * @file sqlsimpleAPI.h
+ * @author HXQ(huangxinquan@matace.cn)
+ * @brief
+ * @version 1.0
+ * @date 2020-9-6
+ * 
+ * @copyright
+ * Copyright (c) 2010-2020, the copyright holders HXQ(huangxinquan@matace.cn)
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted (subject to the limitations in the disclaimer below) provided that
+ * the following conditions are met:
+ * 
+ * Redistributions of source code must retain the above copyright notice, this list
+ * of conditions and the following disclaimer.
+ * 
+ * Redistributions in binary form must reproduce the above copyright notice, this
+ * list of conditions and the following disclaimer in the documentation and/or
+ * other materials provided with the distribution.
+ * 
+ * Neither the name of the copyright holders HXQ(huangxinquan@matace.cn) nor the names of its contributors
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ * 
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
+ * LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */ 
 #ifndef _SQLSIMPLEAPI_H_
 #define _SQLSIMPLEAPI_H_
 
@@ -77,7 +105,7 @@ typedef int (*COMPLETE)(const char *sql);
 static bool GetApi(const char* soname);
 #endif
 
-//==============================¹¤×÷ÖÐ¿ÉÄÜÓÃµÃ±È½Ï¶àµÄº¯Êý()==============================
+//==============================ï¿½ï¿½ï¿½ï¿½ï¿½Ð¿ï¿½ï¿½ï¿½ï¿½ÃµÃ±È½Ï¶ï¿½Äºï¿½ï¿½ï¿½()==============================
 /*db_name is the database you want to open and sql is the sql sentence to execute, this
 **sql sentence should not be sql select sentence***************************/
 int SQL_Exec(const char* db_name, const char* sql);
@@ -90,7 +118,7 @@ int SQL_Select(const char* db_name, const char* sql, char ***pResult, int *nRow,
 //We use this function to free the memory allocated by pResult of SQL_Select function
 void SQL_FreeMemory(char** result);
 
-int SQL_OpenAndClose(const char* db_name); // lxx add for debug
+int SQL_OpenAndClose(const char* db_name); 
 
 /*convert utf-16 character to utf-8*/
 unsigned char * Utf16CharacterToUTF8( int unicode, unsigned char *p);
@@ -99,7 +127,7 @@ unsigned char * Utf16CharacterToUTF8( int unicode, unsigned char *p);
 unsigned char * UnicodeStrToUTF8Str (const unsigned short * unicode_str,
                            unsigned char * utf8_str, int utf8_str_size);
 
-void release(int);       // lxx add 2012-10-10
+void release(int);       
 //========================================================================================
 
 /*open database*/
@@ -140,7 +168,6 @@ struct API
 
     int (*sqlite3_release_memory)(int);
 
-	//lxx add for debug
 	int (*sqlite3_prepare_v2)(
                     sqlite3 *db,            /* Database handle */
                     const char *zSql,       /* SQL statement, UTF-8 encoded */
@@ -159,7 +186,6 @@ struct API
     unsigned long (*sqlite3_memory_used)(void);
     int (*sqlite3_initialize)(void);
     int (*sqlite3_complete)(const char *sql);
-	//lxx add for debug
 };
 
 #endif  //end of #define _SQLSIMPLEAPI_H_

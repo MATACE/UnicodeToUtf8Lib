@@ -1,9 +1,47 @@
+/** 
+ * @file sqlsimpleAPI.cpp
+ * @author HXQ(huangxinquan@matace.cn)
+ * @brief
+ * @version 1.0
+ * @date 2020-9-6
+ * 
+ * @copyright
+ * Copyright (c) 2010-2020, the copyright holders HXQ(huangxinquan@matace.cn)
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted (subject to the limitations in the disclaimer below) provided that
+ * the following conditions are met:
+ * 
+ * Redistributions of source code must retain the above copyright notice, this list
+ * of conditions and the following disclaimer.
+ * 
+ * Redistributions in binary form must reproduce the above copyright notice, this
+ * list of conditions and the following disclaimer in the documentation and/or
+ * other materials provided with the distribution.
+ * 
+ * Neither the name of the copyright holders HXQ(huangxinquan@matace.cn) nor the names of its contributors
+ * may be used to endorse or promote products derived from this software without
+ * specific prior written permission.
+ * 
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
+ * LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */ 
 #include "sqlsimpleAPI.h"
 #include <fcntl.h>
 
 #define MAX_CHARACTER_SIZE 8
 #define PATH_LENGTH 100
-static int print = 0; // lxx add for debug
+static int print = 0;
 static int bApiOpen = 1;
 static int bApiClose = 1;
 
@@ -114,7 +152,7 @@ static sqlite3* OpenDB(const char *szdb_file)
         bApiOpen = 0;
         if(false == GetApi("libsqlite3.so", handle))
         {
-//            printf("lxx add***%s(%d)of%s*****\r\n",__FUNCTION__,__LINE__,__FILE__); //lxx add
+//            printf("add***%s(%d)of%s*****\r\n",__FUNCTION__,__LINE__,__FILE__);
             return NULL;
         }
      }
@@ -266,7 +304,7 @@ static bool SelectFromTable(sqlite3* db,const char *sql, char ***pResult, int *n
 	char *errr_msg = NULL;
 	int rc;
 
-	rc = (api.sqlite3_exec)(db,"BEGIN;",NULL,NULL,&errr_msg);// lxx add
+	rc = (api.sqlite3_exec)(db,"BEGIN;",NULL,NULL,&errr_msg);
 	if(rc != SQLITE_OK)
     {
         resCode = 0;
@@ -299,7 +337,7 @@ static bool SelectFromTable(sqlite3* db,const char *sql, char ***pResult, int *n
 		}
     }//end if
 
-	rc = api.sqlite3_exec(db,"COMMIT;",NULL,NULL,&errr_msg);// lxx add
+	rc = api.sqlite3_exec(db,"COMMIT;",NULL,NULL,&errr_msg);
     if(rc != SQLITE_OK)
     {
         resCode = 0;
@@ -401,7 +439,6 @@ static bool GetApi(const char* soname)
 		FreeLibrary(handle);
 		return FALSE;
     }
-	//lxx test+
     api.sqlite3_prepare_v2 = (PREPARE)GetProcAddress(handle, "sqlite3_prepare_v2");
     if (NULL == api.sqlite3_prepare_v2)
     {
@@ -431,7 +468,6 @@ static bool GetApi(const char* soname)
 		FreeLibrary(handle);
 		return FALSE;
     }
-	//lxx test-
 
 	return TRUE;
 }
@@ -743,7 +779,7 @@ static int dbfile_exist(const char* dbname)
 }
 
 /*
-int SQL_OpenAndClose(const char* db_name) // lxx add for debug
+int SQL_OpenAndClose(const char* db_name)
 {
 	if(db_name == NULL)
        	return false;
